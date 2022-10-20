@@ -33,14 +33,14 @@ const questions = [
     {name: "name", message: "Enter team member name "},
     {name: "eID", message: "Enter team member employee ID "},
     {name: "email", message: "Enter team member email address "},
-    {name: "office", message: "Enter team member office number "}
+    
 ];
 
 function genericQuestions () {
     inquirer.prompt(questions)
         .then((answers) => {
             console.log(answers)
-            return answers
+            writeHTML(answers);
         });
 }
 
@@ -81,25 +81,21 @@ function getCardHTML (answers) {
 
 function getHTMLFoot () {
     return `</main>
-    <script src="./index.js"></script>
+    <script src="../index.js"></script>
 </body>
 
 </html>`
 }
 
-function writeHTML () {
-    let htmlDoc = getHTMLHead("Our Team", "./assets/style.css");
-    htmlDoc += getCardHTML()
+function writeHTML (answers) {
+    let htmlDoc = getHTMLHead("Our Team", "./src/style.css");
+    htmlDoc += getCardHTML(answers)
     htmlDoc += getHTMLFoot();
-    fs.writeFile('index.html', htmlDoc, (err) => err ? console.error(err) : console.log('Success, created index.html'))
+    fs.writeFile('./dist/index.html', htmlDoc, (err) => err ? console.error(err) : console.log('Success, created index.html'))
 }
 
 function onLoad() {
-    // genericQuestions();
-    // let htmlDoc = getHTMLHead("Our Team", "./assets/style.css");
-    // htmlDoc += getCardHTML()
-    // htmlDoc += getHTMLFoot();
-    writeHTML();
+    genericQuestions();
 }
 
 onLoad();
