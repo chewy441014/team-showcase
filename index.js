@@ -6,7 +6,6 @@ const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
 inquirer.registerPrompt("loop", require("inquirer-loop")(inquirer))
 
-
 // initialize questions
 const questions = [
     { type: 'loop', name: "employees", message: "Add a team member? ", questions: [
@@ -97,11 +96,8 @@ function getHTMLFoot() {
 // function to start things off
 function onLoad() {
     // start the questions loop, asking for all the employee info
-    inquirer.prompt(questions)
-        .then((answers) => {
-            // after the loop, generate html from their responses
-            genHTML(answers.employees);
-        });
+    // after the loop, generate html from their responses
+    inquirer.prompt(questions).then((answers) => genHTML(answers.employees));
 }
 
 // run on load
