@@ -28,16 +28,21 @@ function genHTML(employees) {
     for (let i = 0; i < employees.length; i++) {
         // new employee obj each iteration
         let employee;
-        // if the current employee is a manager, make a manager obj and so on. 
+        // if the current employee is a manager, make a manager obj and so on.
+        if (isNaN(parseInt(employees[i].eID))) {
+            throw new Error("Employee ID is not a number");
+        } else if (employees[i].offNum && isNaN(parseInt(employees[i].offNum))) {
+            throw new Error("Employee office num not a number or not entered");
+        } 
         switch (employees[i].job) {
             case "Manager":
-                employee = new Manager(employees[i].name, employees[i].eID, employees[i].email, employees[i].offNum);
+                employee = new Manager(employees[i].name, parseInt(employees[i].eID), employees[i].email, parseInt(employees[i].offNum));
                 break;
             case "Engineer":
-                employee = new Engineer(employees[i].name, employees[i].eID, employees[i].email, employees[i].github);
+                employee = new Engineer(employees[i].name, parseInt(employees[i].eID), employees[i].email, employees[i].github);
                 break;
             case "Intern":
-                employee = new Intern(employees[i].name, employees[i].eID, employees[i].email, employees[i].school);
+                employee = new Intern(employees[i].name, parseInt(employees[i].eID), employees[i].email, employees[i].school);
                 break;
         }
         // add the current employee card to the html doc
@@ -69,7 +74,7 @@ function getHTMLHead(title, cssPath) {
         <main class="d-flex flex-wrap m-3 p-5">`
 }
 
-// generate a card based on the employee object passed into it. 
+// generate a card based on the employee subclass object passed into it. 
 function getCardHTML(employee) {
     return ` <div class="card m-1 p-1" style="width: 20rem">
     <div class="card-body">
